@@ -92,6 +92,9 @@ local plugins = {
 		typst = {
 			{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 		},
+		obsidian = {
+			{ src = "https://github.com/obsidian-nvim/obsidian.nvim" },
+		},
 	},
 }
 
@@ -120,6 +123,17 @@ require("nvim-ts-autotag").setup()
 require("nvim-autopairs").setup()
 require("gitsigns").setup()
 require("fidget").setup({})
+
+--obisidan
+require("obsidian").setup({
+	legacy_commands = false,
+	workspaces = {
+		{
+			name = "University",
+			path = "~/Sync/Obsidian Vaults/",
+		},
+	},
+})
 
 --showkeys
 require("showkeys").setup({ position = "top-right" })
