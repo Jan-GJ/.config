@@ -14,6 +14,7 @@ vim.opt.undofile = true
 vim.opt.undolevels = 10000
 vim.opt.incsearch = true
 vim.opt.signcolumn = "yes"
+vim.opt.scrolloff = 8
 
 --keybinds
 local map = vim.keymap.set
