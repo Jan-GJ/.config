@@ -112,7 +112,11 @@ flatten(plugins)
 vim.pack.add(all_plugins)
 
 --plugin configs
-require("oil").setup()
+require("oil").setup({
+	view_options = {
+		show_hidden = true,
+	},
+})
 require("mason").setup()
 require("mini.pick").setup()
 require("telescope").setup()
