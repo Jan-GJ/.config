@@ -241,7 +241,7 @@ require("lualine").setup({
 })
 
 --vim setup
-vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "tailwindcss" })
+vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "tailwindcss", "gh_actions_ls" })
 vim.diagnostic.config({
 	virtual_lines = {
 		current_line = true,
