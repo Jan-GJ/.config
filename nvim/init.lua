@@ -132,15 +132,19 @@ require("gitsigns").setup()
 require("fidget").setup({})
 
 --obisidan
-require("obsidian").setup({
-	legacy_commands = false,
-	workspaces = {
-		{
-			name = "University",
-			path = "~/Sync/Obsidian Vaults/",
+local obsidian_path = "~/Sync/Obsidian Vaults/"
+local obsidianPluginEnabled = false
+if vim.fn.isdirectory(vim.fn.expand(obsidian_path)) == 1 and obsidianPluginEnabled == true then
+	require("obsidian").setup({
+		legacy_commands = false,
+		workspaces = {
+			{
+				name = "University",
+				path = obsidian_path,
+			},
 		},
-	},
-})
+	})
+end
 
 --showkeys
 require("showkeys").setup({ position = "top-right" })
