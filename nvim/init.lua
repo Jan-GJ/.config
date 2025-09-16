@@ -117,7 +117,12 @@ require("oil").setup({
 		show_hidden = true,
 	},
 })
-require("mason").setup()
+require("mason").setup({
+	registries = {
+		"github:mason-org/mason-registry",
+		"github:mkindberg/ghostty-ls",
+	},
+})
 require("mini.pick").setup()
 require("telescope").setup()
 require("todo-comments").setup()
@@ -241,7 +246,7 @@ require("lualine").setup({
 })
 
 --vim setup
-vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "tailwindcss", "gh_actions_ls" })
+vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "tailwindcss", "gh_actions_ls", "ghostty" })
 vim.diagnostic.config({
 	virtual_lines = {
 		current_line = true,
