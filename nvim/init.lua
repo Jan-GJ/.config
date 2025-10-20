@@ -39,6 +39,9 @@ map("n", "gd", vim.lsp.buf.definition)
 map("n", "<leader>ps", function()
 	require("telescope.builtin").live_grep()
 end)
+map("n", "<leader>rs", function()
+	require("telescope").extensions.repo.list()
+end)
 map("n", "<leader>ut", function()
 	Snacks.picker.undo()
 end)
@@ -54,9 +57,12 @@ local plugins = {
 		{ src = "https://github.com/mason-org/mason.nvim" },
 	},
 	navigation = {
-		{ src = "https://github.com/nvim-telescope/telescope.nvim" },
+		telescope = {
+			{ src = "https://github.com/nvim-telescope/telescope.nvim" },
+			{ src = "https://github.com/cljoly/telescope-repo.nvim" },
+		},
 		{ src = "https://github.com/stevearc/oil.nvim" },
-		{ src = "https://github.com/echasnovski/mini.pick" },
+		{ src = "https://github.com/echasnovski/mini.pick" }, --TODO: replace by telescope
 	},
 	language_features = {
 		{ src = "https://github.com/Saghen/blink.cmp" }, -- Autocompletion
@@ -124,7 +130,21 @@ require("mason").setup({
 	},
 })
 require("mini.pick").setup()
-require("telescope").setup()
+require("telescope").setup({
+	extensions = {
+		repo = {
+			list = {
+				fd_opts = {
+					"--no-ignore-vcs",
+				},
+				search_dirs = {
+					"~/Documents",
+				},
+			},
+		},
+	},
+})
+require("telescope").load_extension("repo")
 require("todo-comments").setup()
 require("nvim-ts-autotag").setup()
 require("nvim-autopairs").setup()
@@ -133,7 +153,7 @@ require("fidget").setup({})
 
 --obisidan
 local obsidian_path = "~/Sync/Obsidian Vaults/"
-local obsidianPluginEnabled = false
+local obsidianPluginEnabled = true
 if vim.fn.isdirectory(vim.fn.expand(obsidian_path)) == 1 and obsidianPluginEnabled == true then
 	require("obsidian").setup({
 		legacy_commands = false,
@@ -180,14 +200,52 @@ require("nvim-treesitter.configs").setup({
 })
 
 --conform
+
+-- require("conform").setup({
+-- 	formatters_by_ft = {
+-- 		lua = { "stylua" },
+-- 		c = { "clang-format" },
+-- 		json = { "jq" },
+-- 		javascriptreact = {
+-- 			"biome",
+-- 			"biome-organize-imports",
+-- 		},
+-- 		typescriptreact = {
+-- 			"biome",
+-- 			"biome-organize-imports",
+-- 		},
+-- 		javascript = {
+-- 			"biome",
+-- 			"biome-organize-imports",
+-- 		},
+-- 		typescript = {
+-- 			"biome",
+-- 			"biome-organize-imports",
+-- 		},
+-- 	},
+-- 	format_on_save = { --INFO: this automatically creates the autocmd for BufWritePre
+-- 		timeout_ms = 500,
+-- 		lsp_format = "fallback",
+-- 	},
+-- })
+
 require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
+		c = { "clang-format" },
 		json = { "jq" },
-		javascriptreact = { "prettierd" },
-		typescriptreact = { "prettierd" },
-		javascript = { "prettierd" },
-		typescript = { "prettierd" },
+		javascriptreact = {
+			"prettierd",
+		},
+		typescriptreact = {
+			"prettierd",
+		},
+		javascript = {
+			"prettierd",
+		},
+		typescript = {
+			"prettierd",
+		},
 	},
 	format_on_save = { --INFO: this automatically creates the autocmd for BufWritePre
 		timeout_ms = 500,
@@ -196,12 +254,34 @@ require("conform").setup({
 })
 
 --lint
+-- require("lint").linters_by_ft = {
+-- 	javascript = {
+-- 		"biomejs",
+-- 	},
+-- 	typescript = {
+-- 		"biomejs",
+-- 	},
+-- 	javascriptreact = {
+-- 		"biomejs",
+-- 	},
+-- 	typescriptreact = {
+-- 		"biomejs",
+-- 	},
+-- }
 vim.env.ESLINT_D_PPID = vim.fn.getpid()
 require("lint").linters_by_ft = {
-	javascript = { "eslint_d" },
-	typescript = { "eslint_d" },
-	javascriptreact = { "eslint_d" },
-	typescriptreact = { "eslint_d" },
+	javascript = {
+		"eslint_d",
+	},
+	typescript = {
+		"eslint_d",
+	},
+	javascriptreact = {
+		"eslint_d",
+	},
+	typescriptreact = {
+		"eslint_d",
+	},
 }
 
 --snacks
@@ -250,7 +330,7 @@ require("lualine").setup({
 })
 
 --vim setup
-vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "tailwindcss", "gh_actions_ls", "ghostty" })
+vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "tailwindcss", "gh_actions_ls", "ghostty", "clangd" })
 vim.diagnostic.config({
 	virtual_lines = {
 		current_line = true,
