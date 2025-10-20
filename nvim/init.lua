@@ -39,11 +39,8 @@ map("n", "gd", vim.lsp.buf.definition)
 map("n", "<leader>ps", function()
 	require("telescope.builtin").live_grep()
 end)
-map("n", "<leader>rs", function()
-	require("telescope").extensions.repo.list()
-end)
 map("n", "<leader>ut", function()
-	Snacks.picker.undo()
+	require("snacks").picker.undo()
 end)
 map("n", "<leader>gb", function()
 	require("gitsigns").blame()
@@ -52,25 +49,23 @@ end)
 --package manager
 local plugins = {
 	core = {
+		{ src = 'https://github.com/neovim/nvim-lspconfig' },
 		{ src = "https://github.com/nvim-lua/plenary.nvim" },
 		{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 		{ src = "https://github.com/mason-org/mason.nvim" },
+		{ src = "https://github.com/nvim-telescope/telescope.nvim" },
+		{ src = "https://github.com/stevearc/oil.nvim" },
+		{ src = "https://github.com/Saghen/blink.cmp" },    -- Autocompletion
+		{ src = "https://github.com/stevearc/conform.nvim" }, -- Formatting
 	},
 	navigation = {
-		telescope = {
-			{ src = "https://github.com/nvim-telescope/telescope.nvim" },
-			{ src = "https://github.com/cljoly/telescope-repo.nvim" },
-		},
-		{ src = "https://github.com/stevearc/oil.nvim" },
 		{ src = "https://github.com/echasnovski/mini.pick" }, --TODO: replace by telescope
 	},
 	language_features = {
-		{ src = "https://github.com/Saghen/blink.cmp" }, -- Autocompletion
+		{ src = "https://github.com/mfussenegger/nvim-lint" },
 		{ src = "https://github.com/windwp/nvim-ts-autotag" },
 		{ src = "https://github.com/windwp/nvim-autopairs" },
 		{ src = "https://github.com/HiPhish/rainbow-delimiters.nvim" },
-		{ src = "https://github.com/mfussenegger/nvim-lint" },
-		{ src = "https://github.com/stevearc/conform.nvim" }, -- Formatting
 		commenting = {
 			{ src = "https://github.com/numToStr/Comment.nvim" },
 			{ src = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring" },
@@ -82,7 +77,7 @@ local plugins = {
 			{ src = "https://github.com/f-person/git-blame.nvim" },
 			{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 		},
-		{ src = "https://github.com/NvChad/showkeys", opt = true },
+		{ src = "https://github.com/NvChad/showkeys",          opt = true },
 		{ src = "https://github.com/folke/todo-comments.nvim" },
 		{ src = "https://github.com/nvim-lualine/lualine.nvim" },
 		{ src = "https://github.com/folke/snacks.nvim" },
@@ -95,9 +90,6 @@ local plugins = {
 	specific_language = {
 		typst = {
 			{ src = "https://github.com/chomosuke/typst-preview.nvim" },
-		},
-		obsidian = {
-			{ src = "https://github.com/obsidian-nvim/obsidian.nvim" },
 		},
 	},
 }
@@ -131,40 +123,13 @@ require("mason").setup({
 })
 require("mini.pick").setup()
 require("telescope").setup({
-	extensions = {
-		repo = {
-			list = {
-				fd_opts = {
-					"--no-ignore-vcs",
-				},
-				search_dirs = {
-					"~/Documents",
-				},
-			},
-		},
-	},
+	extensions = {},
 })
-require("telescope").load_extension("repo")
 require("todo-comments").setup()
 require("nvim-ts-autotag").setup()
 require("nvim-autopairs").setup()
 require("gitsigns").setup()
 require("fidget").setup({})
-
---obisidan
-local obsidian_path = "~/Sync/Obsidian Vaults/"
-local obsidianPluginEnabled = true
-if vim.fn.isdirectory(vim.fn.expand(obsidian_path)) == 1 and obsidianPluginEnabled == true then
-	require("obsidian").setup({
-		legacy_commands = false,
-		workspaces = {
-			{
-				name = "University",
-				path = obsidian_path,
-			},
-		},
-	})
-end
 
 --showkeys
 require("showkeys").setup({ position = "top-right" })
@@ -185,6 +150,7 @@ require("nvim-treesitter.configs").setup({
 		"diff",
 		"lua",
 		"luadoc",
+		"json5",
 		"markdown",
 		"markdown_inline",
 		"query",
@@ -200,51 +166,38 @@ require("nvim-treesitter.configs").setup({
 })
 
 --conform
-
--- require("conform").setup({
--- 	formatters_by_ft = {
--- 		lua = { "stylua" },
--- 		c = { "clang-format" },
--- 		json = { "jq" },
--- 		javascriptreact = {
--- 			"biome",
--- 			"biome-organize-imports",
--- 		},
--- 		typescriptreact = {
--- 			"biome",
--- 			"biome-organize-imports",
--- 		},
--- 		javascript = {
--- 			"biome",
--- 			"biome-organize-imports",
--- 		},
--- 		typescript = {
--- 			"biome",
--- 			"biome-organize-imports",
--- 		},
--- 	},
--- 	format_on_save = { --INFO: this automatically creates the autocmd for BufWritePre
--- 		timeout_ms = 500,
--- 		lsp_format = "fallback",
--- 	},
--- })
-
 require("conform").setup({
+	formatters = {
+		biome = {
+			require_cwd = true,
+		},
+		["biome-organize-imports"] = {
+			require_cwd = true,
+		},
+		prettierd = {
+			require_cwd = true,
+		},
+	},
 	formatters_by_ft = {
-		lua = { "stylua" },
-		c = { "clang-format" },
-		json = { "jq" },
 		javascriptreact = {
 			"prettierd",
+			"biome",
+			"biome-organize-imports",
 		},
 		typescriptreact = {
 			"prettierd",
+			"biome",
+			"biome-organize-imports",
 		},
 		javascript = {
 			"prettierd",
+			"biome",
+			"biome-organize-imports",
 		},
 		typescript = {
 			"prettierd",
+			"biome",
+			"biome-organize-imports",
 		},
 	},
 	format_on_save = { --INFO: this automatically creates the autocmd for BufWritePre
@@ -253,21 +206,6 @@ require("conform").setup({
 	},
 })
 
---lint
--- require("lint").linters_by_ft = {
--- 	javascript = {
--- 		"biomejs",
--- 	},
--- 	typescript = {
--- 		"biomejs",
--- 	},
--- 	javascriptreact = {
--- 		"biomejs",
--- 	},
--- 	typescriptreact = {
--- 		"biomejs",
--- 	},
--- }
 vim.env.ESLINT_D_PPID = vim.fn.getpid()
 require("lint").linters_by_ft = {
 	javascript = {
@@ -285,6 +223,7 @@ require("lint").linters_by_ft = {
 }
 
 --snacks
+---@diagnostic disable-next-line: unnecessary-if
 if package.loaded["snacks"] then
 	package.loaded["snacks"] = nil
 end
@@ -330,23 +269,30 @@ require("lualine").setup({
 })
 
 --vim setup
-vim.lsp.enable({ "lua_ls", "tinymist", "vtsls", "tailwindcss", "gh_actions_ls", "ghostty", "clangd" })
+vim.lsp.enable({ "emmylua_ls", "tinymist", "vtsls", "tailwindcss", "jsonls" })
+vim.lsp.config("emmylua_ls", {
+	cmd = { "emmylua_ls" },
+	settings = {
+		Lua = {
+			workspace = {
+				library = {
+					vim.env.VIMRUNTIME
+				}
+			}
+		}
+	}
+})
 vim.diagnostic.config({
 	virtual_lines = {
 		current_line = true,
 	},
-})
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function()
-		require("lint").try_lint()
-	end,
 })
 
 --theme
 local function load_theme(theme_name)
 	local ok, mod = pcall(require, theme_name)
 	if ok and mod and type(mod.setup) == "function" then
+		---@diagnostic disable-next-line: need-check-nil
 		mod.setup({ transparent = true })
 		vim.cmd("colorscheme " .. theme_name)
 		vim.cmd(":hi statusline guibg=NONE")
