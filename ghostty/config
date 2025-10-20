@@ -1,17 +1,21 @@
 theme = light:TokyoNight Day,dark:TokyoNight Night
 
 background = 000000 
-background-opacity = 0.9
-background-blur = true
+background-opacity = 1
+background-blur = false
 
+confirm-close-surface = false
+quit-after-last-window-closed = true
 
+# font-family = IBMPlexMono
 font-family = TX-02 
-font-size = 20
+
+font-size = 18.2
 
 window-decoration = auto
-macos-titlebar-style = tabs
-window-padding-y = 0
-window-padding-x = 0
+macos-titlebar-style = hidden
+window-padding-y = 5
+window-padding-x = 10
 title = ""
 
 cursor-style = block
