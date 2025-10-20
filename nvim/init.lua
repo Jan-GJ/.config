@@ -15,11 +15,11 @@ vim.opt.undolevels = 10000
 vim.opt.incsearch = true
 vim.opt.signcolumn = "yes"
 vim.opt.scrolloff = 8
+vim.o.winborder = 'none'
 
 --keybinds
 local map = vim.keymap.set
 vim.g.mapleader = " "
-
 map("n", "<leader>o", ":update<CR> :source<CR>")
 map("n", "<leader>w", ":write<CR>")
 map("n", "<leader>q", ":quit<CR>")
@@ -86,6 +86,7 @@ local plugins = {
 	themes = {
 		{ src = "https://github.com/vague2k/vague.nvim" },
 		{ src = "https://github.com/ribru17/bamboo.nvim" },
+		{ src = "https://github.com/folke/tokyonight.nvim" },
 	},
 	specific_language = {
 		typst = {
@@ -133,10 +134,95 @@ require("fidget").setup({})
 
 --showkeys
 require("showkeys").setup({ position = "top-right" })
-
 --blink
 require("blink.cmp").setup({
 	keymap = { preset = "enter" },
+	snippets = {
+		preset = "default",
+	},
+	appearance = {
+		kind_icons = {
+			Array         = " ",
+			Boolean       = "󰨙 ",
+			Class         = " ",
+			Codeium       = "󰘦 ",
+			Color         = " ",
+			Control       = " ",
+			Collapsed     = " ",
+			Constant      = "󰏿 ",
+			Constructor   = " ",
+			Copilot       = " ",
+			Enum          = " ",
+			EnumMember    = " ",
+			Event         = " ",
+			Field         = " ",
+			File          = " ",
+			Folder        = " ",
+			Function      = "󰊕 ",
+			Interface     = " ",
+			Key           = " ",
+			Keyword       = " ",
+			Method        = "󰊕 ",
+			Module        = " ",
+			Namespace     = "󰦮 ",
+			Null          = " ",
+			Number        = "󰎠 ",
+			Object        = " ",
+			Operator      = " ",
+			Package       = " ",
+			Property      = " ",
+			Reference     = " ",
+			Snippet       = "󱄽 ",
+			String        = " ",
+			Struct        = "󰆼 ",
+			Supermaven    = " ",
+			TabNine       = "󰏚 ",
+			Text          = " ",
+			TypeParameter = " ",
+			Unit          = " ",
+			Value         = " ",
+			Variable      = "󰀫 ",
+		},
+		nerd_font_variant = "mono",
+	},
+	completion = {
+		menu = {
+			draw = {
+				treesitter = { "lsp" },
+				columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } }
+			},
+		},
+		documentation = {
+			auto_show = true,
+			auto_show_delay_ms = 200,
+		},
+		ghost_text = {
+			enabled = vim.g.ai_cmp,
+		},
+
+		sources = {
+			compat = {},
+			default = { "lsp", "path", "snippets", "buffer" },
+		},
+		cmdline = {
+			enabled = true,
+			keymap = {
+				preset = "cmdline",
+				["<Right>"] = false,
+				["<Left>"] = false,
+			},
+			completion = {
+				list = { selection = { preselect = false } },
+				menu = {
+					auto_show = function(_ctx)
+						return vim.fn.getcmdtype() == ":"
+					end,
+				},
+				ghost_text = { enabled = true },
+			},
+		},
+	},
+
 })
 
 --treesitter
@@ -251,12 +337,10 @@ comment.setup({
 })
 
 --lualine
-local custom_lualine_theme = require("lualine.themes.iceberg_dark")
-custom_lualine_theme.normal.c.bg = "#000000"
 require("lualine").setup({
 	options = {
 		icons_enabled = false,
-		theme = custom_lualine_theme,
+		theme = "tokyonight",
 		component_separators = { left = "|", right = "|" },
 		section_separators = { left = "", right = "" },
 		globalstatus = true,
@@ -289,16 +373,4 @@ vim.diagnostic.config({
 })
 
 --theme
-local function load_theme(theme_name)
-	local ok, mod = pcall(require, theme_name)
-	if ok and mod and type(mod.setup) == "function" then
-		---@diagnostic disable-next-line: need-check-nil
-		mod.setup({ transparent = true })
-		vim.cmd("colorscheme " .. theme_name)
-		vim.cmd(":hi statusline guibg=NONE")
-	else
-		vim.notify("Failed to load theme: " .. tostring(theme_name), vim.log.levels.ERROR)
-	end
-end
-
-load_theme("bamboo")
+vim.cmd [[colorscheme tokyonight-night]]

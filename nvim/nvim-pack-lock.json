@@ -1,0 +1,34 @@
+{
+  "plugins": {
+    "Comment.nvim": [],
+    "bamboo.nvim": [],
+    "blink.cmp": [],
+    "conform.nvim": [],
+    "fidget.nvim": [],
+    "git-blame.nvim": [],
+    "gitsigns.nvim": [],
+    "lualine.nvim": [],
+    "mason.nvim": [],
+    "mini.pick": [],
+    "nvim-autopairs": [],
+    "nvim-lint": [],
+    "nvim-lspconfig": [],
+    "nvim-treesitter": [],
+    "nvim-ts-autotag": [],
+    "nvim-ts-context-commentstring": [],
+    "oil.nvim": [],
+    "plenary.nvim": [],
+    "rainbow-delimiters.nvim": [],
+    "render-markdown.nvim": [],
+    "showkeys": [],
+    "snacks.nvim": [],
+    "telescope.nvim": [],
+    "todo-comments.nvim": [],
+    "tokyonight.nvim": {
+      "rev": "e63c42a",
+      "src": "https://github.com/folke/tokyonight.nvim"
+    },
+    "typst-preview.nvim": [],
+    "vague.nvim": []
+  }
+}
