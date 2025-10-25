@@ -31,14 +31,12 @@ map("n", "<Esc>", "<cmd>nohlsearch<CR>")
 map("v", "J", ":m '>+1<CR>gv=gv")
 map("v", "K", ":m '<-2<CR>gv=gv")
 map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-map("n", "<leader>f", ":Pick files<CR>")
-map("n", "<leader>h", ":Pick help<CR>")
+map("n", "<leader>f", ":Telescope find_files<CR>")
+map("n", "<leader>h", ":Telescope help_tags<CR>")
 map("n", "<leader>e", ":Oil<CR>")
 map("n", "<leader>vd", vim.diagnostic.open_float)
 map("n", "gd", vim.lsp.buf.definition)
-map("n", "<leader>ps", function()
-	require("telescope.builtin").live_grep()
-end)
+map("n", "<leader>ps", ":Telescope live_grep<CR>")
 map("n", "<leader>ut", function()
 	require("snacks").picker.undo()
 end)
@@ -57,9 +55,6 @@ local plugins = {
 		{ src = "https://github.com/stevearc/oil.nvim" },
 		{ src = "https://github.com/Saghen/blink.cmp" },    -- Autocompletion
 		{ src = "https://github.com/stevearc/conform.nvim" }, -- Formatting
-	},
-	navigation = {
-		{ src = "https://github.com/echasnovski/mini.pick" }, --TODO: replace by telescope
 	},
 	language_features = {
 		{ src = "https://github.com/mfussenegger/nvim-lint" },
@@ -119,10 +114,8 @@ require("oil").setup({
 require("mason").setup({
 	registries = {
 		"github:mason-org/mason-registry",
-		"github:mkindberg/ghostty-ls",
 	},
 })
-require("mini.pick").setup()
 require("telescope").setup({
 	extensions = {},
 })
@@ -200,29 +193,27 @@ require("blink.cmp").setup({
 			enabled = vim.g.ai_cmp,
 		},
 
-		sources = {
-			compat = {},
-			default = { "lsp", "path", "snippets", "buffer" },
-		},
-		cmdline = {
-			enabled = true,
-			keymap = {
-				preset = "cmdline",
-				["<Right>"] = false,
-				["<Left>"] = false,
-			},
-			completion = {
-				list = { selection = { preselect = false } },
-				menu = {
-					auto_show = function(_ctx)
-						return vim.fn.getcmdtype() == ":"
-					end,
-				},
-				ghost_text = { enabled = true },
-			},
-		},
 	},
-
+	sources = {
+		default = { "lsp", "path", "snippets", "buffer" },
+	},
+	-- cmdline = {
+	-- 	enabled = true,
+	-- 	keymap = {
+	-- 		preset = "cmdline",
+	-- 		["<Right>"] = false,
+	-- 		["<Left>"] = false,
+	-- 	},
+	-- 	completion = {
+	-- 		list = { selection = { preselect = false } },
+	-- 		menu = {
+	-- 			auto_show = function(_ctx)
+	-- 				return vim.fn.getcmdtype() == ":"
+	-- 			end,
+	-- 		},
+	-- 		ghost_text = { enabled = true },
+	-- 	},
+	-- },
 })
 
 --treesitter
