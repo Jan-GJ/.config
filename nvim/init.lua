@@ -1,21 +1,22 @@
 --options
-vim.opt.winborder = "rounded"
-vim.opt.tabstop = 2
-vim.opt.cursorcolumn = false
-vim.opt.ignorecase = true
-vim.opt.shiftwidth = 2
-vim.opt.smartindent = true
-vim.opt.wrap = false
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.swapfile = false
-vim.opt.termguicolors = true
-vim.opt.undofile = true
-vim.opt.undolevels = 10000
-vim.opt.incsearch = true
-vim.opt.signcolumn = "yes"
-vim.opt.scrolloff = 8
-vim.o.winborder = 'none'
+local opt = vim.opt
+opt.winborder = "rounded"
+opt.tabstop = 2
+opt.cursorcolumn = false
+opt.ignorecase = true
+opt.shiftwidth = 2
+opt.smartindent = true
+opt.wrap = false
+opt.number = true
+opt.relativenumber = true
+opt.swapfile = false
+opt.termguicolors = true
+opt.undofile = true
+opt.undolevels = 10000
+opt.incsearch = true
+opt.signcolumn = "yes"
+opt.scrolloff = 8
+opt.winborder = 'none'
 
 --keybinds
 local map = vim.keymap.set
@@ -52,41 +53,30 @@ local plugins = {
 		{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 		{ src = "https://github.com/mason-org/mason.nvim" },
 		{ src = "https://github.com/nvim-telescope/telescope.nvim" },
-		{ src = "https://github.com/stevearc/oil.nvim" },
-		{ src = "https://github.com/Saghen/blink.cmp" },    -- Autocompletion
-		{ src = "https://github.com/stevearc/conform.nvim" }, -- Formatting
+		{ src = "https://github.com/stevearc/oil.nvim" },   --netrw replacement
+		{ src = "https://github.com/Saghen/blink.cmp" },    -- autocompletion
+		{ src = "https://github.com/stevearc/conform.nvim" }, -- formatting
+		{ src = "https://github.com/folke/tokyonight.nvim" }, --theme
+		{ src = "https://github.com/numToStr/Comment.nvim" }, --commenting
+		{ src = "https://github.com/HiPhish/rainbow-delimiters.nvim" },
 	},
 	language_features = {
+		{ src = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring" }, --tsx commenting
 		{ src = "https://github.com/mfussenegger/nvim-lint" },
 		{ src = "https://github.com/windwp/nvim-ts-autotag" },
 		{ src = "https://github.com/windwp/nvim-autopairs" },
-		{ src = "https://github.com/HiPhish/rainbow-delimiters.nvim" },
-		commenting = {
-			{ src = "https://github.com/numToStr/Comment.nvim" },
-			{ src = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring" },
-		},
-		{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
 	},
 	ui = {
-		git = {
-			{ src = "https://github.com/f-person/git-blame.nvim" },
-			{ src = "https://github.com/lewis6991/gitsigns.nvim" },
-		},
-		{ src = "https://github.com/NvChad/showkeys",          opt = true },
+		{ src = "https://github.com/f-person/git-blame.nvim" },
+		{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 		{ src = "https://github.com/folke/todo-comments.nvim" },
 		{ src = "https://github.com/nvim-lualine/lualine.nvim" },
 		{ src = "https://github.com/folke/snacks.nvim" },
 		{ src = "https://github.com/j-hui/fidget.nvim" },
 	},
-	themes = {
-		{ src = "https://github.com/vague2k/vague.nvim" },
-		{ src = "https://github.com/ribru17/bamboo.nvim" },
-		{ src = "https://github.com/folke/tokyonight.nvim" },
-	},
-	specific_language = {
-		typst = {
-			{ src = "https://github.com/chomosuke/typst-preview.nvim" },
-		},
+	no_code = {
+		{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+		{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	},
 }
 
@@ -125,8 +115,6 @@ require("nvim-autopairs").setup()
 require("gitsigns").setup()
 require("fidget").setup({})
 
---showkeys
-require("showkeys").setup({ position = "top-right" })
 --blink
 require("blink.cmp").setup({
 	keymap = { preset = "enter" },
@@ -322,8 +310,7 @@ require("snacks").setup({
 })
 
 --comment
-local comment = require("Comment")
-comment.setup({
+require("Comment").setup({
 	pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
 })
 
@@ -364,4 +351,4 @@ vim.diagnostic.config({
 })
 
 --theme
-vim.cmd [[colorscheme tokyonight-night]]
+vim.cmd([[colorscheme tokyonight-night]])
