@@ -1,0 +1,32 @@
+{
+  "plugins": {
+    "Comment.nvim": [],
+    "blink.cmp": [],
+    "conform.nvim": [],
+    "copilot-lsp": {
+      "rev": "a80e0c1",
+      "src": "https://github.com/copilotlsp-nvim/copilot-lsp"
+    },
+    "copilot.lua": [],
+    "fidget.nvim": [],
+    "git-blame.nvim": [],
+    "gitsigns.nvim": [],
+    "lualine.nvim": [],
+    "mason.nvim": [],
+    "nvim-autopairs": [],
+    "nvim-lint": [],
+    "nvim-lspconfig": [],
+    "nvim-treesitter": [],
+    "nvim-ts-autotag": [],
+    "nvim-ts-context-commentstring": [],
+    "oil.nvim": [],
+    "plenary.nvim": [],
+    "rainbow-delimiters.nvim": [],
+    "render-markdown.nvim": [],
+    "snacks.nvim": [],
+    "telescope.nvim": [],
+    "todo-comments.nvim": [],
+    "tokyonight.nvim": [],
+    "typst-preview.nvim": []
+  }
+}

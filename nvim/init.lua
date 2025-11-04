@@ -78,6 +78,10 @@ local plugins = {
 		{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
 		{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	},
+	test = {
+		{ src = "https://github.com/zbirenbaum/copilot.lua" },
+		{ src = "https://github.com/copilotlsp-nvim/copilot-lsp" }
+	}
 }
 
 local all_plugins = {}
@@ -101,6 +105,7 @@ require("oil").setup({
 		show_hidden = true,
 	},
 })
+
 require("mason").setup({
 	registries = {
 		"github:mason-org/mason-registry",
@@ -177,9 +182,9 @@ require("blink.cmp").setup({
 			auto_show = true,
 			auto_show_delay_ms = 200,
 		},
-		ghost_text = {
-			enabled = vim.g.ai_cmp,
-		},
+		-- ghost_text = {
+		-- 	enabled = vim.g.ai_cmp,
+		-- },
 
 	},
 	sources = {
@@ -328,6 +333,38 @@ require("lualine").setup({
 		lualine_x = { "encoding" },
 		lualine_y = {},
 	},
+})
+
+--copilot
+require('copilot').setup({
+	panel = {
+		enabled = false,
+	},
+	suggestion = {
+		enabled = true,
+		auto_trigger = true,
+		keymap = {
+			accept = "<TAB>",
+		},
+	},
+	nes = {
+		enabled = false, -- requires copilot-lsp as a dependency
+		auto_trigger = false,
+	},
+})
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "BlinkCmpMenuOpen",
+	callback = function()
+		vim.b.copilot_suggestion_hidden = true
+	end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "BlinkCmpMenuClose",
+	callback = function()
+		vim.b.copilot_suggestion_hidden = false
+	end,
 })
 
 --vim setup
