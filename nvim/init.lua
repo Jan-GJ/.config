@@ -65,6 +65,7 @@ local plugins = {
 		{ src = "https://github.com/mfussenegger/nvim-lint" },
 		{ src = "https://github.com/windwp/nvim-ts-autotag" },
 		{ src = "https://github.com/windwp/nvim-autopairs" },
+		{ src = "https://github.com/L3MON4D3/LuaSnip" }
 	},
 	ui = {
 		{ src = "https://github.com/f-person/git-blame.nvim" },
@@ -120,11 +121,14 @@ require("nvim-autopairs").setup()
 require("gitsigns").setup()
 require("fidget").setup({})
 
+--Luasnip
+require("luasnip").setup({})
+
 --blink
 require("blink.cmp").setup({
 	keymap = { preset = "enter" },
 	snippets = {
-		preset = "default",
+		preset = "luasnip",
 	},
 	appearance = {
 		kind_icons = {
@@ -367,8 +371,19 @@ vim.api.nvim_create_autocmd("User", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("InsertLeave", {
+	callback = function()
+		-- Dismiss Copilot ghost text when exiting insert mode
+		local ok, copilot_suggestion = pcall(require, "copilot.suggestion")
+		if ok and copilot_suggestion then
+			copilot_suggestion.dismiss()
+		end
+	end,
+})
+
 --vim setup
-vim.lsp.enable({ "emmylua_ls", "tinymist", "vtsls", "tailwindcss", "jsonls" })
+vim.lsp.enable({ "emmylua_ls", "gh-actions-language-server", "tinymist", "vtsls", "tailwindcss", "jsonls", "css-lsp",
+	"clangd" })
 vim.lsp.config("emmylua_ls", {
 	cmd = { "emmylua_ls" },
 	settings = {
@@ -381,6 +396,59 @@ vim.lsp.config("emmylua_ls", {
 		}
 	}
 })
+-- clangd config for platform.io embeded programming
+vim.lsp.config("clangd", {
+	cmd = {
+		"clangd",
+		"--background-index",
+		"--clang-tidy",
+		"--header-insertion=iwyu",
+		"--completion-style=detailed",
+		"--function-arg-placeholders",
+		"--fallback-style=llvm",
+		"--query-driver=**", -- 👈 THIS IS THE KEY FIX
+	}
+})
+vim.lsp.config("tailwindcss", {
+	cmd = { "tailwindcss-language-server", "--stdio" },
+	settings = {
+		tailwindCSS = {
+			-- Add your custom class attributes
+			classAttributes = {
+				"class",
+				"className",
+				"headerClassName",
+				"contentContainerClassName",
+				"columnWrapperClassName",
+				"endFillColorClassName",
+				"imageClassName",
+				"tintColorClassName",
+				"ios_backgroundColorClassName",
+				"thumbColorClassName",
+				"trackColorOnClassName",
+				"trackColorOffClassName",
+				"selectionColorClassName",
+				"cursorColorClassName",
+				"underlineColorAndroidClassName",
+				"placeholderTextColorClassName",
+				"selectionHandleColorClassName",
+				"colorsClassName",
+				"progressBackgroundColorClassName",
+				"titleColorClassName",
+				"underlayColorClassName",
+				"colorClassName",
+				"drawerBackgroundColorClassName",
+				"statusBarBackgroundColorClassName",
+				"backdropColorClassName",
+				"backgroundColorClassName",
+				"ListFooterComponentClassName",
+				"ListHeaderComponentClassName",
+			},
+			classFunctions = { "useResolveClassNames" },
+		},
+	}
+})
+
 vim.diagnostic.config({
 	virtual_lines = {
 		current_line = true,
