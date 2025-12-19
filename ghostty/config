@@ -1,4 +1,4 @@
-theme = light:TokyoNight Day,dark:Ultra Dark
+theme = Gruvbox Dark 
 
 # background-opacity = 1
 # background-blur = false
@@ -6,7 +6,6 @@ theme = light:TokyoNight Day,dark:Ultra Dark
 
 confirm-close-surface = false
 quit-after-last-window-closed = true
-
 
 # font-family = IBM Plex Mono
 font-family = TX-02 
@@ -63,6 +62,5 @@ cursor-style-blink = false
 # custom-shader = shaders/water.glsl
 # custom-shader = shaders/cursor_blaze.glsl
 # custom-shader = shaders/cursor_blaze_no_trail.glsl
-custom-shader = shaders/cursor_smear.glsl
+# custom-shader = shaders/cursor_smear.glsl
 # custom-shader = shaders/cursor_smear_fade.glsl
-
