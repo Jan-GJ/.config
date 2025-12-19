@@ -1,19 +1,21 @@
-theme = light:TokyoNight Day,dark:TokyoNight Night
+theme = light:TokyoNight Day,dark:Ultra Dark
 
-#background = 000000 
-background-opacity = 1
-background-blur = false
+# background-opacity = 1
+# background-blur = false
+#background-blur = macos-glass-regular
 
 confirm-close-surface = false
 quit-after-last-window-closed = true
 
-# font-family = IBMPlexMono
+
+# font-family = IBM Plex Mono
 font-family = TX-02 
 
 font-size = 18.2
 
 # window-decoration = auto
 # macos-titlebar-style = hidden
+window-save-state = always
 window-padding-y = 5
 window-padding-x = 10
 title = ""
