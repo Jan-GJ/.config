@@ -47,44 +47,50 @@ end)
 
 --package manager
 local plugins = {
-	{ src = 'https://github.com/neovim/nvim-lspconfig' },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
-	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
-	{ src = "https://github.com/Saghen/blink.cmp" },
-	{ src = "https://github.com/stevearc/conform.nvim" },
 	{ src = "https://github.com/folke/tokyonight.nvim" },
-	{ src = "https://github.com/numToStr/Comment.nvim" },
-	{ src = "https://github.com/HiPhish/rainbow-delimiters.nvim" },
-	{ src = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring" },
-	{ src = "https://github.com/mfussenegger/nvim-lint" },
-	{ src = "https://github.com/windwp/nvim-ts-autotag" },
-	{ src = "https://github.com/windwp/nvim-autopairs" },
-	{ src = "https://github.com/L3MON4D3/LuaSnip" },
-	{ src = "https://github.com/f-person/git-blame.nvim" },
-	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
-	{ src = "https://github.com/folke/todo-comments.nvim" },
-	{ src = "https://github.com/nvim-lualine/lualine.nvim" },
-	{ src = "https://github.com/folke/snacks.nvim" },
-	{ src = "https://github.com/j-hui/fidget.nvim" },
-	{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
-	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
-	{ src = "https://github.com/zbirenbaum/copilot.lua" },
-	{ src = "https://github.com/copilotlsp-nvim/copilot-lsp" }
+	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
+	{src = "https://github.com/sar/ultra-darkplus.nvim" },
+	-- { src = 'https://github.com/neovim/nvim-lspconfig' },
+	-- { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+	-- { src = "https://github.com/Saghen/blink.cmp" },
+	-- { src = "https://github.com/stevearc/conform.nvim" },
+	-- { src = "https://github.com/numToStr/Comment.nvim" },
+	-- { src = "https://github.com/HiPhish/rainbow-delimiters.nvim" },
+	-- { src = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring" },
+	-- { src = "https://github.com/mfussenegger/nvim-lint" },
+	-- { src = "https://github.com/windwp/nvim-ts-autotag" },
+	-- { src = "https://github.com/windwp/nvim-autopairs" },
+	-- { src = "https://github.com/L3MON4D3/LuaSnip" },
+	-- { src = "https://github.com/f-person/git-blame.nvim" },
+	-- { src = "https://github.com/lewis6991/gitsigns.nvim" },
+	-- { src = "https://github.com/folke/todo-comments.nvim" },
+	-- { src = "https://github.com/nvim-lualine/lualine.nvim" },
+	-- { src = "https://github.com/folke/snacks.nvim" },
+	-- { src = "https://github.com/j-hui/fidget.nvim" },
+	-- { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+	-- { src = "https://github.com/chomosuke/typst-preview.nvim" },
+	-- { src = "https://github.com/zbirenbaum/copilot.lua" },
+	-- { src = "https://github.com/copilotlsp-nvim/copilot-lsp" }
 }
 vim.pack.add(plugins)
 
 --plugin configs
-require("oil").setup(require("plugin-configs.oil"))
+require("oil").setup({
+	view_options = {
+		show_hidden = true,
+}})
+	
+
 require("mason").setup({})
 require("telescope").setup({})
-require("todo-comments").setup({})
-require("nvim-ts-autotag").setup({})
-require("nvim-autopairs").setup({})
-require("gitsigns").setup({})
-require("fidget").setup({})
+-- require("todo-comments").setup({})
+-- require("nvim-ts-autotag").setup({})
+-- require("nvim-autopairs").setup({})
+-- require("gitsigns").setup({})
+-- require("fidget").setup({})
 
 --Luasnip
 -- require("luasnip").setup({})
@@ -348,20 +354,21 @@ require("fidget").setup({})
 -- })
 --
 -- --vim setup
-vim.lsp.enable({ "emmylua_ls", "gh-actions-language-server", "tinymist", "vtsls", "tailwindcss", "jsonls", "css-lsp",	"clangd" })
-vim.lsp.config("emmylua_ls", {
-	cmd = { "emmylua_ls" },
-	settings = {
-		Lua = {
-			workspace = {
-				library = {
-					vim.env.VIMRUNTIME,
-					vim.fn.stdpath("data") .. "/site/pack/*/opt/*",
-				}
-			}
-		}
-	}
-})
+-- vim.lsp.enable({ "emmylua_ls", 
+-- "gh-actions-language-server", "tinymist", "vtsls", "tailwindcss", "jsonls", "css-lsp",	"clangd" 
+-- })
+-- vim.lsp.config("emmylua_ls", {
+-- 	cmd = { "emmylua_ls" },
+-- 	settings = {
+-- 		Lua = {
+-- 			workspace = {
+-- 				library = {
+-- 					vim.env.VIMRUNTIME,
+-- 				}
+-- 			}
+-- 		}
+-- 	}
+-- })
 -- -- clangd config for platform.io embeded programming
 -- vim.lsp.config("clangd", {
 -- 	cmd = {
@@ -422,4 +429,4 @@ vim.lsp.config("emmylua_ls", {
 -- })
 
 --theme
-vim.cmd([[colorscheme tokyonight-night]])
+vim.cmd([[colorscheme ultradark]])
