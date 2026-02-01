@@ -171,7 +171,21 @@ require "lualine".setup {
 	},
 	sections = {
 		lualine_c = { { "filename", path = 1 } },
-		lualine_x = { "encoding", "filetype" },
+		lualine_x = { "encoding", "filetype",
+			{
+				function()
+					local format = vim.bo.fileformat
+					if format == 'unix' then
+						return 'LF'
+					elseif format == 'dos' then
+						return 'CRLF'
+					elseif format == 'mac' then
+						return 'CR'
+					end
+					return format
+				end
+			},
+		},
 		lualine_y = {},
 	},
 }
@@ -179,36 +193,47 @@ require "lualine".setup {
 --conform
 require "conform".setup {
 	formatters = {
-		biome = {
-			require_cwd = true,
-		},
-		["biome-organize-imports"] = {
-			require_cwd = true,
-		},
-		prettierd = {
-			require_cwd = true,
-		},
+		-- biome = {
+		-- 	require_cwd = true,
+		-- },
+		-- ["biome-organize-imports"] = {
+		-- 	require_cwd = true,
+		-- },
+		-- prettierd = {
+		-- 	require_cwd = true,
+		-- },
 	},
 	formatters_by_ft = {
+		json = {
+			"oxfmt"
+		},
 		javascriptreact = {
-			"prettierd",
-			"biome",
-			"biome-organize-imports",
+			"oxfmt"
+			-- "prettierd",
+			-- "biome",
+			-- "biome-organize-imports",
 		},
 		typescriptreact = {
-			"prettierd",
-			"biome",
-			"biome-organize-imports",
+			"oxfmt"
+			-- "prettierd",
+			-- "biome",
+			-- "biome-organize-imports",
+		},
+
+		kotlin = {
+			"ktlint"
 		},
 		javascript = {
-			"prettierd",
-			"biome",
-			"biome-organize-imports",
+			"oxfmt"
+			-- "prettierd",
+			-- "biome",
+			-- "biome-organize-imports",
 		},
 		typescript = {
-			"prettierd",
-			"biome",
-			"biome-organize-imports",
+			"oxfmt"
+			-- "prettierd",
+			-- "biome",
+			-- "biome-organize-imports",
 		},
 	},
 	format_on_save = { --INFO: this automatically creates the autocmd for BufWritePre
@@ -216,61 +241,6 @@ require "conform".setup {
 		lsp_format = "fallback",
 	},
 }
-
---emmylua_ls
-vim.lsp.config("emmylua_ls", {
-	cmd = { "emmylua_ls" },
-	settings = {
-		Lua = {
-			workspace = {
-				library = {
-					vim.env.VIMRUNTIME,
-				}
-			}
-		}
-	}
-})
-
--- tailwindcss
-vim.lsp.config("tailwindcss", {
-	cmd = { "tailwindcss-language-server", "--stdio" },
-	settings = {
-		tailwindCSS = {
-			-- Add your custom class attributes
-			classAttributes = {
-				"class",
-				"className",
-				"headerClassName",
-				"contentContainerClassName",
-				"columnWrapperClassName",
-				"endFillColorClassName",
-				"imageClassName",
-				"tintColorClassName",
-				"ios_backgroundColorClassName",
-				"thumbColorClassName",
-				"trackColorOnClassName",
-				"trackColorOffClassName",
-				"selectionColorClassName",
-				"cursorColorClassName",
-				"underlineColorAndroidClassName",
-				"placeholderTextColorClassName",
-				"selectionHandleColorClassName",
-				"colorsClassName",
-				"progressBackgroundColorClassName",
-				"titleColorClassName",
-				"underlayColorClassName",
-				"colorClassName",
-				"drawerBackgroundColorClassName",
-				"statusBarBackgroundColorClassName",
-				"backdropColorClassName",
-				"backgroundColorClassName",
-				"ListFooterComponentClassName",
-				"ListHeaderComponentClassName",
-			},
-			classFunctions = { "useResolveClassNames" },
-		},
-	}
-})
 
 --snacks
 ---@diagnostic disable-next-line: unnecessary-if
@@ -463,7 +433,7 @@ require "blink.cmp".setup {
 
 
 --theme
-require "gruvbox".setup {}
+require "gruvbox".setup {
+	transparent_mode = true
+}
 vim.cmd([[colorscheme gruvbox]])
-vim.cmd([[highlight! link SignColumn Normal]])
-vim.cmd([[highlight! link FoldColumn Normal]])

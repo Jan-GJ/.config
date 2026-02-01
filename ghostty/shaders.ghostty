@@ -1,27 +1,3 @@
-theme = Gruvbox Dark 
-
-# background-opacity = 1
-# background-blur = false
-#background-blur = macos-glass-regular
-
-confirm-close-surface = false
-quit-after-last-window-closed = true
-
-# font-family = IBM Plex Mono
-font-family = TX-02 
-
-font-size = 18.2
-
-# window-decoration = auto
-# macos-titlebar-style = hidden
-window-save-state = always
-window-padding-y = 5
-window-padding-x = 10
-title = ""
-
-cursor-style = block
-cursor-style-blink = false
-
 # Shaders
 # Some shaders can be found in this repo, they're usually uploaded to discord
 # https://github.com/hackrmomo/ghostty-shaders
@@ -64,3 +40,4 @@ cursor-style-blink = false
 # custom-shader = shaders/cursor_blaze_no_trail.glsl
 # custom-shader = shaders/cursor_smear.glsl
 # custom-shader = shaders/cursor_smear_fade.glsl
+
