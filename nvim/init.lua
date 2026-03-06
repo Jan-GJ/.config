@@ -71,11 +71,9 @@ local plugins = {
 	{ src = "https://github.com/folke/snacks.nvim" },
 	{ src = "https://github.com/Saghen/blink.cmp" },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
-	{ src = "https://github.com/soulsam480/nvim-oxlint" }
 
 	-- { src = "https://github.com/zbirenbaum/copilot.lua" },
 	-- { src = "https://github.com/copilotlsp-nvim/copilot-lsp" }
-	-- { src = "https://github.com/mfussenegger/nvim-lint" },
 }
 vim.pack.add(plugins)
 
@@ -339,42 +337,8 @@ require "blink.cmp".setup {
 	sources = {
 		default = { "lsp", "path", "snippets", "buffer" },
 	},
-	-- cmdline = {
-	-- 	enabled = true,
-	-- 	keymap = {
-	-- 		preset = "cmdline",
-	-- 		["<Right>"] = false,
-	-- 		["<Left>"] = false,
-	-- 	},
-	-- 	completion = {
-	-- 		list = { selection = { preselect = false } },
-	-- 		menu = {
-	-- 			auto_show = function(_ctx)
-	-- 				return vim.fn.getcmdtype() == ":"
-	-- 			end,
-	-- 		},
-	-- 		ghost_text = { enabled = true },
-	-- 	},
-	-- },
 }
 
-
--- vim.env.ESLINT_D_PPID = vim.fn.getpid()
--- require("lint").linters_by_ft = {
--- 	javascript = {
--- 		"eslint_d",
--- 	},
--- 	typescript = {
--- 		"eslint_d",
--- 	},
--- 	javascriptreact = {
--- 		"eslint_d",
--- 	},
--- 	typescriptreact = {
--- 		"eslint_d",
--- 	},
--- }
---
 -- --copilot
 -- require('copilot').setup({
 -- 	panel = {
@@ -392,46 +356,7 @@ require "blink.cmp".setup {
 -- 		auto_trigger = false,
 -- 	},
 -- })
---
--- vim.api.nvim_create_autocmd("User", {
--- 	pattern = "BlinkCmpMenuOpen",
--- 	callback = function()
--- 		vim.b.copilot_suggestion_hidden = true
--- 	end,
--- })
---
--- vim.api.nvim_create_autocmd("User", {
--- 	pattern = "BlinkCmpMenuClose",
--- 	callback = function()
--- 		vim.b.copilot_suggestion_hidden = false
--- 	end,
--- })
---
--- vim.api.nvim_create_autocmd("InsertLeave", {
--- 	callback = function()
--- 		-- Dismiss Copilot ghost text when exiting insert mode
--- 		local ok, copilot_suggestion = pcall(require, "copilot.suggestion")
--- 		if ok and copilot_suggestion then
--- 			copilot_suggestion.dismiss()
--- 		end
--- 	end,
--- })
---
--- -- clangd config for platform.io embeded programming
--- vim.lsp.config("clangd", {
--- 	cmd = {
--- 		"clangd",
--- 		"--background-index",
--- 		"--clang-tidy",
--- 		"--header-insertion=iwyu",
--- 		"--completion-style=detailed",
--- 		"--function-arg-placeholders",
--- 		"--fallback-style=llvm",
--- 		"--query-driver=**", -- 👈 THIS IS THE KEY FIX
--- 	}
--- })
---
---
+
 local util = require 'lspconfig.util'
 vim.lsp.config("oxfmt",
 
