@@ -1,5 +1,5 @@
 # Theme
-theme = Gruvbox Dark 
+theme = GitHub Dark High Contrast 
 
 # Font
 font-family = TX-02 
@@ -13,6 +13,9 @@ quit-after-last-window-closed = true
 window-save-state = always
 window-padding-y = 5
 window-padding-x = 10
+
+#Splits
+unfocused-split-opacity = 0.5
 
 # Cursor 
 cursor-style = block

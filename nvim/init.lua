@@ -52,6 +52,7 @@ local plugins = {
 	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/ellisonleao/gruvbox.nvim" },
+	{ src = "https://github.com/projekt0n/github-nvim-theme" },
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/mason-org/mason-lspconfig.nvim" },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
@@ -113,8 +114,6 @@ map("n", "<leader>ut", function()
 end)
 map("n", "<leader>gb", gitsigns.blame)
 
-
-
 --treesitter
 local nvim_treesitter = require "nvim-treesitter"
 nvim_treesitter.setup {}
@@ -164,7 +163,7 @@ require "Comment".setup {
 require "lualine".setup {
 	options = {
 		icons_enabled = false,
-		theme = "gruvbox",
+		theme = "github_dark_high_contrast",
 		component_separators = { left = "|", right = "|" },
 		section_separators = { left = "", right = "" },
 		globalstatus = true,
@@ -193,47 +192,49 @@ require "lualine".setup {
 --conform
 require "conform".setup {
 	formatters = {
-		-- biome = {
-		-- 	require_cwd = true,
-		-- },
-		-- ["biome-organize-imports"] = {
-		-- 	require_cwd = true,
-		-- },
-		-- prettierd = {
-		-- 	require_cwd = true,
-		-- },
+		oxfmt = {
+			require_cwd = true,
+		},
+		biome = {
+			require_cwd = true,
+		},
+		["biome-organize-imports"] = {
+			require_cwd = true,
+		},
+		prettierd = {
+			require_cwd = true,
+		},
 	},
 	formatters_by_ft = {
 		json = {
 			"oxfmt"
 		},
 		javascriptreact = {
+			"oxfmt",
+			"prettierd",
+			"biome",
+			"biome-organize-imports",
+		},
+		yaml = {
 			"oxfmt"
-			-- "prettierd",
-			-- "biome",
-			-- "biome-organize-imports",
 		},
 		typescriptreact = {
-			"oxfmt"
-			-- "prettierd",
-			-- "biome",
-			-- "biome-organize-imports",
-		},
-
-		kotlin = {
-			"ktlint"
+			"oxfmt",
+			"prettierd",
+			"biome",
+			"biome-organize-imports",
 		},
 		javascript = {
-			"oxfmt"
-			-- "prettierd",
-			-- "biome",
-			-- "biome-organize-imports",
+			"oxfmt",
+			"prettierd",
+			"biome",
+			"biome-organize-imports",
 		},
 		typescript = {
-			"oxfmt"
-			-- "prettierd",
-			-- "biome",
-			-- "biome-organize-imports",
+			"oxfmt",
+			"prettierd",
+			"biome",
+			"biome-organize-imports",
 		},
 	},
 	format_on_save = { --INFO: this automatically creates the autocmd for BufWritePre
@@ -428,12 +429,24 @@ require "blink.cmp".setup {
 -- 		"--query-driver=**", -- 👈 THIS IS THE KEY FIX
 -- 	}
 -- })
+--
 
-
-
+vim.filetype.add({
+	extension = {
+		env = "sh",
+	},
+	filename = {
+		[".env"] = "sh",
+	},
+	pattern = {
+		["%.env%.[%w_.-]+"] = "sh",
+	},
+})
 
 --theme
-require "gruvbox".setup {
-	transparent_mode = true
+require "github-theme".setup {
+	options = {
+		transparent = true
+	}
 }
-vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme github_dark_high_contrast]])
