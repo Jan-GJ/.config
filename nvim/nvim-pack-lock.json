@@ -52,9 +52,17 @@
       "rev": "c2a0dd0d931d0fb07665e1fedb1ea688da3b80b4",
       "src": "https://github.com/windwp/nvim-autopairs"
     },
+    "nvim-lint": {
+      "rev": "606b823a57b027502a9ae00978ebf4f5d5158098",
+      "src": "https://github.com/mfussenegger/nvim-lint"
+    },
     "nvim-lspconfig": {
       "rev": "c4f67bf85b01a57e3c130352c0a0e453ab8cd5b9",
       "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-oxlint": {
+      "rev": "3cfe73c077aea2a8ba8ebf2c5b584731590021f8",
+      "src": "https://github.com/soulsam480/nvim-oxlint"
     },
     "nvim-treesitter": {
       "rev": "4fc09bee78e91bf4ba471cdab4bf9dfa37fde51c",
