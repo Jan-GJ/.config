@@ -27,6 +27,7 @@ opt.undolevels = 10000
 opt.incsearch = true
 opt.signcolumn = "yes"
 opt.scrolloff = 8
+opt.colorcolumn = "80"
 opt.winborder = 'none'
 opt.foldcolumn = "1"
 
@@ -40,7 +41,7 @@ vim_global.loaded_perl_provider = 0
 --vom lsp error display
 vim.diagnostic.config({
 	virtual_lines = {
-		current_lin = true,
+		current_line = true,
 	},
 })
 
@@ -63,7 +64,8 @@ local plugins = {
 	{ src = "https://github.com/stevearc/conform.nvim" },
 	{ src = "https://github.com/numToStr/Comment.nvim" },
 	{ src = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring" },
-	{ src = "https://github.com/HiPhish/rainbow-delimiters.nvim" },
+	{ src = "https://github.com/brenoprata10/nvim-highlight-colors" },
+
 	{ src = "https://github.com/f-person/git-blame.nvim" },
 	{ src = "https://github.com/nvim-lualine/lualine.nvim" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
@@ -72,6 +74,7 @@ local plugins = {
 	{ src = "https://github.com/Saghen/blink.cmp" },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 
+	{ src = "https://github.com/olimorris/onedarkpro.nvim" }
 	-- { src = "https://github.com/zbirenbaum/copilot.lua" },
 	-- { src = "https://github.com/copilotlsp-nvim/copilot-lsp" }
 }
@@ -85,6 +88,14 @@ require "mason-lspconfig".setup {}
 require "todo-comments".setup {}
 require "nvim-ts-autotag".setup {}
 require "nvim-autopairs".setup {}
+require "nvim-highlight-colors".setup {
+	render = 'virtual',
+	virtual_symbol = '⏺',
+	virtual_symbol_suffix = '',
+	virtual_symbol_prefix = ' ',
+	virtual_symbol_position = 'eow',
+	enable_tailwind = true,
+}
 
 --gitsigns
 local gitsigns = require "gitsigns"
@@ -154,6 +165,9 @@ fidget.setup {}
 vim.notify = fidget.notify
 
 --comment
+require "ts_context_commentstring".setup {
+	enable_autocmd = false,
+}
 require "Comment".setup {
 	pre_hook = require "ts_context_commentstring.integrations.comment_nvim".create_pre_hook(),
 }
@@ -162,7 +176,7 @@ require "Comment".setup {
 require "lualine".setup {
 	options = {
 		icons_enabled = false,
-		theme = "github_dark_high_contrast",
+		theme = "onedark_dark",
 		component_separators = { left = "|", right = "|" },
 		section_separators = { left = "", right = "" },
 		globalstatus = true,
@@ -260,7 +274,7 @@ require("snacks").setup({
 	statuscolumn = { enabled = false },
 	notifier = { enabled = false },
 	--enabled
-	indent = { enabled = true },
+	indent = { enabled = false },
 	scope = { enabled = true },
 })
 
@@ -470,7 +484,7 @@ vim.lsp.config("oxlint",
 		},
 		before_init = function(init_params, config)
 			local settings = config.settings or {}
-			if settings.typeAware == nil and vim.fn.executable('tsgolint') == 1 then
+			if settings.typeAware == nil and vim.fn.executable('tsgo') == 1 then
 				local ok, res = pcall(oxlint_conf_mentions_typescript, config.root_dir)
 				if ok and res then
 					settings = vim.tbl_extend('force', settings, { typeAware = true })
@@ -498,9 +512,4 @@ vim.filetype.add({
 })
 
 --theme
-require "github-theme".setup {
-	options = {
-		transparent = true
-	}
-}
-vim.cmd([[colorscheme github_dark_high_contrast]])
+vim.cmd([[colorscheme onedark_dark]])
