@@ -28,7 +28,6 @@ opt.incsearch = true
 opt.signcolumn = "yes"
 opt.scrolloff = 8
 opt.colorcolumn = "80"
-opt.winborder = 'none'
 opt.foldcolumn = "1"
 
 --globals
@@ -74,7 +73,8 @@ local plugins = {
 	{ src = "https://github.com/Saghen/blink.cmp" },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 
-	{ src = "https://github.com/olimorris/onedarkpro.nvim" }
+	{ src = "https://github.com/olimorris/onedarkpro.nvim" },
+	{ src = "https://github.com/dmtrKovalenko/fff.nvim" }
 	-- { src = "https://github.com/zbirenbaum/copilot.lua" },
 	-- { src = "https://github.com/copilotlsp-nvim/copilot-lsp" }
 }
@@ -113,12 +113,12 @@ map("n", "<Esc>", "<cmd>nohlsearch<CR>")
 map("v", "J", ":m '>+1<CR>gv=gv")
 map("v", "K", ":m '<-2<CR>gv=gv")
 map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-map("n", "<leader>f", ":Telescope find_files<CR>")
+map("n", "<leader>f", function() require("fff").find_files() end, { desc = "FFF find files" })
 map("n", "<leader>h", ":Telescope help_tags<CR>")
 map("n", "<leader>e", ":Oil<CR>")
 map("n", "<leader>vd", vim.diagnostic.open_float)
 map("n", "gd", vim.lsp.buf.definition)
-map("n", "<leader>ps", ":Telescope live_grep<CR>")
+map("n", "<leader>ps", function() require("fff").live_grep() end, { desc = "FFF live grep" })
 map("n", "<leader>ut", function()
 	require "snacks".picker.undo()
 end)
@@ -277,6 +277,13 @@ require("snacks").setup({
 	indent = { enabled = false },
 	scope = { enabled = true },
 })
+
+--fff
+require("fff").setup({})
+local fff_download = require("fff.download")
+if vim.fn.filereadable(fff_download.get_binary_path()) == 0 then
+	pcall(fff_download.download_or_build_binary)
+end
 
 --Luasnip
 require "luasnip".setup {}

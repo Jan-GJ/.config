@@ -16,6 +16,10 @@
       "rev": "328c2f1dda56f933d3337a1316e1020ba30ba6aa",
       "src": "https://github.com/stevearc/conform.nvim"
     },
+    "fff.nvim": {
+      "rev": "0f5ead1ab5355ea83be1171c54d8d44a65c5f7b4",
+      "src": "https://github.com/dmtrKovalenko/fff.nvim"
+    },
     "fidget.nvim": {
       "rev": "64463022a1f2ff1318ab22a2ea4125ed9313a483",
       "src": "https://github.com/j-hui/fidget.nvim"
