@@ -1,5 +1,5 @@
 # Theme
-theme = GitHub Dark High Contrast 
+theme = Liquid Carbon Transparent
 
 # Font
 font-family = TX-02 
@@ -19,8 +19,9 @@ unfocused-split-opacity = 0.5
 
 # Cursor 
 cursor-style = block
+shell-integration-features = no-cursor
 cursor-style-blink = false
 
 # Additional config files 
-config-file = "vim.ghostty"
+#config-file = "vim.ghostty"
 config-file = "shaders.ghostty"
