@@ -65,7 +65,6 @@ local plugins = {
 	{ src = "https://github.com/JoosepAlviste/nvim-ts-context-commentstring" },
 	{ src = "https://github.com/brenoprata10/nvim-highlight-colors" },
 
-	{ src = "https://github.com/f-person/git-blame.nvim" },
 	{ src = "https://github.com/nvim-lualine/lualine.nvim" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
@@ -83,7 +82,13 @@ vim.pack.add(plugins)
 --plugins
 require "mason".setup {}
 require "telescope".setup {}
-require "gitsigns".setup {}
+require "gitsigns".setup {
+	current_line_blame = true,
+	current_line_blame_opts = {
+		delay = 500,
+		virt_text_pos = "eol",
+	},
+}
 require "mason-lspconfig".setup {}
 require "todo-comments".setup {}
 require "nvim-ts-autotag".setup {}

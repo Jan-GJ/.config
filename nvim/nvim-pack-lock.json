@@ -24,10 +24,6 @@
       "rev": "64463022a1f2ff1318ab22a2ea4125ed9313a483",
       "src": "https://github.com/j-hui/fidget.nvim"
     },
-    "git-blame.nvim": {
-      "rev": "5c536e2d4134d064aa3f41575280bc8a2a0e03d7",
-      "src": "https://github.com/f-person/git-blame.nvim"
-    },
     "github-nvim-theme": {
       "rev": "c106c9472154d6b2c74b74565616b877ae8ed31d",
       "src": "https://github.com/projekt0n/github-nvim-theme"

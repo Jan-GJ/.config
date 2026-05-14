@@ -15,7 +15,7 @@ window-padding-y = 5
 window-padding-x = 10
 
 #Splits
-unfocused-split-opacity = 0.5
+unfocused-split-opacity = 0.8
 
 # Cursor 
 cursor-style = block
