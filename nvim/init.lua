@@ -316,10 +316,19 @@ vim.notify = fidget.notify
 require "ts_context_commentstring".setup { enable_autocmd = false }
 require "Comment".setup { pre_hook = require "ts_context_commentstring.integrations.comment_nvim".create_pre_hook() }
 
+local lualine_theme = require("lualine.themes.tokyonight-night")
+for mode, sections in pairs(lualine_theme) do
+	for section, highlight in pairs(sections) do
+		if section ~= "a" or mode == "inactive" then
+			highlight.bg = "#000000"
+		end
+	end
+end
+
 require "lualine".setup {
 	options = {
 		icons_enabled = false,
-		theme = "tokyonight-night",
+		theme = lualine_theme,
 		component_separators = { left = "|", right = "|" },
 		section_separators = { left = "", right = "" },
 		globalstatus = true
@@ -662,21 +671,34 @@ vim.filetype.add({
 })
 
 -- theme
-local function apply_transparent_background()
-	local groups = {
-		"Normal", "NormalNC", "NormalFloat", "FloatBorder", "FloatTitle", "SignColumn", "FoldColumn", "LineNr",
-		"CursorLineNr", "CursorLine", "CursorColumn", "ColorColumn", "EndOfBuffer", "StatusLine", "StatusLineNC", "TabLine",
-		"TabLineFill", "WinBar", "WinBarNC", "WinSeparator", "Pmenu", "PmenuSel"
-	}
+require("tokyonight").setup({
+	style = "night",
+	transparent = false,
+	terminal_colors = true,
+	styles = {
+		sidebars = "dark",
+		floats = "dark"
+	},
+	on_colors = function (colors)
+		colors.bg = "#000000"
+		colors.bg_float = "#000000"
+		colors.bg_popup = "#000000"
+		colors.bg_statusline = "#000000"
+	end,
+	on_highlights = function (highlights, colors)
+		local function use_black_background(group)
+			local highlight = highlights[group]
+			if type(highlight) == "table" then
+				highlight.bg = colors.bg
+			end
+		end
 
-	for _, group in ipairs(groups) do
-		-- vim.cmd("highlight " .. group .. " guibg=NONE ctermbg=NONE")
+		use_black_background("@markup.raw.markdown_inline")
+		use_black_background("RenderMarkdownCode")
+		for index = 1, #colors.rainbow do
+			use_black_background("@markup.heading." .. index .. ".markdown")
+			use_black_background("RenderMarkdownH" .. index .. "Bg")
+		end
 	end
-end
-
-vim.api.nvim_create_autocmd("ColorScheme", {
-	desc = "Keep editor backgrounds transparent",
-	callback = apply_transparent_background
 })
 vim.cmd([[colorscheme tokyonight-night]])
-apply_transparent_background()

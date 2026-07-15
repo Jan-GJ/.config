@@ -1,7 +1,8 @@
 # Theme
-theme = TokyoNight Night 
-#background-opacity = 0.9
-#background-blur = true
+theme = TokyoNight Night
+background = #000000
+background-opacity = 1
+background-blur = false
 
 # Font
 font-family = TX-02 
