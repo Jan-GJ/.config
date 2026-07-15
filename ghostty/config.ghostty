@@ -1,5 +1,7 @@
 # Theme
-theme = Liquid Carbon Transparent
+theme = TokyoNight Night 
+#background-opacity = 0.9
+#background-blur = true
 
 # Font
 font-family = TX-02 
